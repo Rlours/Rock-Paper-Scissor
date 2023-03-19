@@ -11,49 +11,45 @@ function getComputerChoice() {
 }
 
 function playRound(player, computer) {
-  let playerString = player.toLowerCase();
-
   // your code here!
-  if (playerString === "rock" && computer === "paper") {
+  if (player === "ROCK" && computer === "PAPER") {
     return "Computer Won";
-  } else if (playerString === "rock" && computer === "scissor") {
+  } else if (player === "ROCK" && computer === "SCISSOR") {
     return "You Won";
-  } else if (playerString === "rock" && computer === "rock") {
+  } else if (player === "ROCK" && computer === "ROCK") {
     return "Draw";
-  } else if (playerString === "paper" && computer === "rock") {
+  } else if (player === "PAPER" && computer === "ROCK") {
     return "You Won";
-  } else if (playerString === " paper" && computer === "scissor") {
+  } else if (player === "PAPER" && computer === "SCISSOR") {
     return "Computer Won";
-  } else if (playerString === "paper" && computer === " paper") {
+  } else if (player === "PAPER" && computer === "PAPER") {
     return "draw";
-  } else if (playerString === "scissor" && computer === "paper") {
+  } else if (player === "SCISSOR" && computer === "PAPER") {
     return "Computer Won";
-  } else if (playerString === "scissor" && computer === "rock") {
+  } else if (player === "SCISSOR" && computer === "ROCK") {
     return "You Won";
   } else {
     return "draw";
   }
 }
 
-// console.log(playRound(playerSelection, getComputerChoice()));
-
-function game() {
-  let score;
+function updateScores(result) {
   let playerScore = 0;
   let computerScore = 0;
-  for (let i = 0; i < 5; i++) {
-    // your code here!
-    let playerSelection = prompt("Please enter your choice");
-    let roundResult = playRound(playerSelection, getComputerChoice());
-
-    if (roundResult === "You Won") {
-      playerScore++;
-    } else if (roundResult === "Computer Won") {
-      computerScore++;
-    }
+  if (result === "You Won") {
+    playerScore++;
+  } else if (result === "Computer Won") {
+    computerScore++;
   }
-  console.log("Final score:");
-  console.log("Player: " + playerScore);
-  console.log("Computer: " + computerScore);
+  console.log(playerScore, computerScore);
+  document.getElementById("player-score").textContent = playerScore;
+  document.getElementById("computer-score").textContent = computerScore;
 }
-game()
+
+function display(e) {
+  let playerSelection = e.target.textContent;
+  let roundResult = playRound(playerSelection, getComputerChoice());
+  updateScores(roundResult);
+}
+let choices = document.querySelectorAll(".btn");
+choices.forEach((choice) => choice.addEventListener("click", display));
