@@ -4,9 +4,7 @@ function getComputerChoice() {
   return randomNumber;
 }
 
-console.log("Output after get computer function", `${getComputerChoice()}`);
 // ----* Computer selection for Rock paper Scissor
-
 function play(player, computer) {
   if (player === 1 && computer === 2) {
     return "You Lose";
@@ -26,22 +24,38 @@ function play(player, computer) {
 }
 let playerScore = 0;
 let computerScore = 0;
+
 function display(e) {
+  if (playerScore === 5 || computerScore === 5) {
+    return;
+  }
   let playerSelection = Number(e.target.value);
-  console.log("Player Choice in display", playerSelection);
   let computerSelection = getComputerChoice();
-  console.log("Computer choice in display function", computerSelection);
   let roundResult = play(playerSelection, computerSelection);
-  console.log("Computer choice after roundresult function", computerSelection);
 
   if (roundResult === "You Won") {
     playerScore++;
+    document.getElementById("player-score").textContent = playerScore;
   } else if (roundResult === "You Lose") {
     computerScore++;
+    document.getElementById("computer-score").textContent = computerScore;
   }
-  document.getElementById("player-score").textContent = playerScore;
-  document.getElementById("computer-score").textContent = computerScore;
+
+  if (playerScore === 5) {
+    document.querySelector(".message").textContent = `The winner is Player`;
+  } else if (computerScore === 5) {
+    document.querySelector(".message").textContent = `The winner is Computer`;
+  }
 }
 
 let choices = document.querySelectorAll(".btn");
 choices.forEach((choice) => choice.addEventListener("click", display));
+
+function reset() {
+  document.getElementById("player-score").textContent = 0;
+  document.getElementById("computer-score").textContent = 0;
+  document.querySelector(".message").textContent = `The winner is `;
+}
+
+let resetBtn = document.querySelector("#reset");
+resetBtn.addEventListener("click", reset);
